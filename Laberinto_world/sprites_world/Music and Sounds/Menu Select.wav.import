@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Menu Select.wav-652e8c05a01ca7a9766e730729ea7e13.sample"
+
+[deps]
+
+source_file="res://Laberinto_world/sprites_world/Music and Sounds/Menu Select.wav"
+dest_files=[ "res://.import/Menu Select.wav-652e8c05a01ca7a9766e730729ea7e13.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

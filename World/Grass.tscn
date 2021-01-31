@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://World/Grass.png" type="Texture" id=1]
+[ext_resource path="res://Laberinto_world/sprites_world/World/Grass.png" type="Texture" id=1]
 [ext_resource path="res://World/Grass.gd" type="Script" id=2]
 [ext_resource path="res://Hurt and Hitboxes/Hurtbox.tscn" type="PackedScene" id=3]
 

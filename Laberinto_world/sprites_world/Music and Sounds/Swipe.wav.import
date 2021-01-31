@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Swipe.wav-fd86e482483886ad46ef9ced0d09d129.sample"
+
+[deps]
+
+source_file="res://Laberinto_world/sprites_world/Music and Sounds/Swipe.wav"
+dest_files=[ "res://.import/Swipe.wav-fd86e482483886ad46ef9ced0d09d129.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

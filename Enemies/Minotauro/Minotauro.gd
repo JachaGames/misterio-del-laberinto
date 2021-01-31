@@ -10,14 +10,17 @@ export var WANDER_TARGET_RANGE = 4
 enum {
 	IDLE,
 	WANDER,
-	CHASE
+	CHASE,
+	ATTACK
 }
 
 var velocity = Vector2.ZERO
 var knockback = Vector2.ZERO
 
 onready var sprite = $SpriteToro
-onready var anim = $AnimationPlayer
+onready var animationPlayer = $AnimationPlayer
+onready var animationTree = $AnimationTree
+onready var animationState = animationTree.get("parameters/playback")
 onready var stats = $Stats
 onready var playerDetectionZone = $PlayerDetectionZone
 onready var hurtbox = $Hurtbox
@@ -27,7 +30,9 @@ onready var wanderController = $WanderController
 var state = IDLE
 
 func _ready():
+	
 	state = pick_random_state([IDLE, WANDER])
+	animationTree.active = true
 #	print(sprite)
 
 
@@ -38,20 +43,28 @@ func _physics_process(delta):
 	match state:
 		IDLE:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-			anim.play("Idle")
+			animationState.travel("Idle")
 			seek_player()
 			if wanderController.get_time_left() == 0:
 				state = pick_random_state([IDLE, WANDER])
 				wanderController.start_wander_timer(rand_range(1, 3))
 		WANDER:
 			seek_player()
+			
 			if wanderController.get_time_left() == 0:
 				state = pick_random_state([IDLE, WANDER])
 				wanderController.start_wander_timer(rand_range(1, 3))
 			
 			var direction = global_position.direction_to(wanderController.target_position)
+			
 			velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
-			anim.play("WalkRight")
+			var input_vector = Vector2(-velocity.x, -velocity.y)
+			
+			animationTree.set("parameters/Idle/blend_position", input_vector)
+			animationTree.set("parameters/Run/blend_position", input_vector)
+			animationTree.set("parameters/Attack/blend_position", input_vector)
+			#anim.play("WalkRight")
+			animationState.travel("Run")
 			sprite.flip_h = velocity.x < 0
 			
 			if global_position.distance_to(wanderController.target_position) <= 4:
@@ -62,22 +75,33 @@ func _physics_process(delta):
 			if player != null:
 				var direction = global_position.direction_to(player.global_position)
 				velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+				var input_vector = velocity
+			
+				animationTree.set("parameters/Idle/blend_position", input_vector)
+				animationTree.set("parameters/Run/blend_position", input_vector)
+				animationTree.set("parameters/Attack/blend_position", input_vector)
 				var distance = global_position.distance_to(player.global_position)
 				print('distance: ', distance)
-				if distance < 50:
+				if distance < 10:
 					print('attack!')
-					anim.play("AttackRight")
+					state = ATTACK
 			else:
 				state = IDLE
-				
-			
 			
 			sprite.flip_h = velocity.x < 0
-			anim.play("WalkRight")
+			animationState.travel("Run")
+		ATTACK:
+			attack_state(delta)
 	
 	if softCollision.is_colliding():
 		velocity += softCollision.get_push_vector() * delta * 400
 	velocity = move_and_slide(velocity)
+
+
+func attack_state(delta):
+	velocity = Vector2.ZERO
+	animationState.travel("Attack")
+
 
 func seek_player():
 	if playerDetectionZone.can_see_player():
@@ -87,6 +111,10 @@ func seek_player():
 func pick_random_state(state_list):
 	state_list.shuffle()
 	return state_list.pop_front()
+
+
+func attack_animation_finished():
+	state = pick_random_state([IDLE, WANDER])
 
 
 func _on_Hurtbox_area_entered(area):
