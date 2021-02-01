@@ -41,9 +41,11 @@ func set_active_maze(maze_id):
 			maze.set_collision_layer_bit(2, false)
 			maze.set_collision_mask_bit(0, true)
 			maze.set_collision_mask_bit(2, false)
+			maze.occluder_light_mask = 1
 		else:
 			maze.hide()
 			maze.set_collision_layer_bit(0, false)
 			maze.set_collision_layer_bit(2, true)
 			maze.set_collision_mask_bit(0, false)
 			maze.set_collision_mask_bit(2, true)
+			maze.occluder_light_mask = 2

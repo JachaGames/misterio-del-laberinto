@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://World/Torch/white_square.png" type="Texture" id=1]
+[ext_resource path="res://World/Torch/light image.png" type="Texture" id=2]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.0689655, 0.690909 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.0090909 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0, 0.207048, 0.585903, 1 )
+colors = PoolColorArray( 0.8125, 0.187677, 0.104736, 1, 0.83599, 0.493152, 0.128195, 1, 0.914063, 0.786304, 0.096405, 1, 1, 1, 1, 1 )
+
+[node name="Fire" type="Node2D"]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Particles2D" type="CPUParticles2D" parent="."]
+position = Vector2( -12.3469, 60.2072 )
+scale = Vector2( 0.5, 0.5 )
+emitting = false
+amount = 400
+lifetime = 0.5
+lifetime_randomness = 0.26
+texture = ExtResource( 1 )
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector2( 0, -1 )
+spread = 10.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 200.0
+initial_velocity_random = 0.8
+angular_velocity = 430.0
+linear_accel = 10.0
+tangential_accel = 12.0
+angle = 360.0
+angle_random = 1.0
+scale_amount = 0.3
+scale_amount_curve = SubResource( 1 )
+color_ramp = SubResource( 2 )
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( -16.9514, 32.8433 )
+scale = Vector2( 0.832826, 0.686549 )
+texture = ExtResource( 2 )
+texture_scale = 0.78
+energy = 8.15

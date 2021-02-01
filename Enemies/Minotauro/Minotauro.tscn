@@ -440,7 +440,6 @@ texture = ExtResource( 2 )
 texture = ExtResource( 1 )
 offset = Vector2( 0, -40 )
 hframes = 44
-frame = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://World/Torch/Fire.tscn" type="PackedScene" id=1]
+[ext_resource path="res://World/Torch/light image.png" type="Texture" id=4]
+
+[node name="torch" type="Node2D"]
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 544, -640 )
+scale = Vector2( 1.8, 1.92308 )
+texture = ExtResource( 4 )
+texture_scale = 1.5
+energy = 6.5
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Fire" parent="Light2D" instance=ExtResource( 1 )]
+position = Vector2( -57.0886, -80.2484 )
+scale = Vector2( 1.69792, 1.89286 )
