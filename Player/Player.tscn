@@ -666,6 +666,7 @@ script = ExtResource( 4 )
 
 [node name="CollisionShape2D" parent="HitboxPivot/SwordHitbox" index="0"]
 shape = SubResource( 46 )
+disabled = true
 
 [node name="Hurtbox" parent="." instance=ExtResource( 5 )]
 collision_layer = 4

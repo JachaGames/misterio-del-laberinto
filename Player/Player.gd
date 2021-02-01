@@ -15,6 +15,7 @@ var state = MOVE
 var velocity = Vector2.ZERO
 var roll_vector = Vector2.DOWN
 var stats = PlayerStats
+var sceneChanger = SceneChanger
 
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
@@ -25,7 +26,8 @@ onready var hurtbox = $Hurtbox
 
 func _ready():
 	randomize()
-	stats.connect("no_health", self, "queue_free")
+	stats.connect("no_health", self, "die")
+	stats.connect("victory", self, "win")
 	animationTree.active = true
 	swordHitbox.knockback_vector = roll_vector
 
@@ -63,7 +65,8 @@ func move_state(delta):
 		state = ROLL
 	
 	if Input.is_action_just_pressed("attack"):
-		state = ATTACK
+		if stats.has_sword:
+			state = ATTACK
 
 func attack_state(delta):
 	velocity = Vector2.ZERO
@@ -89,7 +92,18 @@ func attack_animation_finished():
 
 
 func _on_Hurtbox_area_entered(area):
-	stats.health -= 1
+	stats.health -= area.damage
 	print(stats.health)
 	hurtbox.start_invincibility(0.5)
 	hurtbox.create_hit_effect()
+	
+func die():
+	queue_free()
+	sceneChanger.change_scene("res://UI/MainMenu.tscn", 0.5)
+	
+func win():
+	print('gane!')
+	animationState.travel("Win")
+	yield(get_tree().create_timer(2), "timeout")
+	queue_free()
+	sceneChanger.change_scene("res://UI/MainMenu.tscn", 1.5)

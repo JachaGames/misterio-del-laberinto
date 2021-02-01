@@ -1,13 +1,39 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Laberinto_world/sprites_world/World/Tree.png" type="Texture" id=1]
 [ext_resource path="res://Shadows/LargeShadow.png" type="Texture" id=2]
+[ext_resource path="res://World/Tree.gd" type="Script" id=3]
+[ext_resource path="res://Enemies/PlayerDetectionZone.tscn" type="PackedScene" id=4]
+[ext_resource path="res://World/Torch/light image.png" type="Texture" id=5]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 7.65939
 height = 9.55309
 
+[sub_resource type="CircleShape2D" id=4]
+radius = 35.3518
+
+[sub_resource type="Animation" id=3]
+resource_name = "Pulse"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Light2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 2.0, 1.0 ]
+}
+
 [node name="Tree" type="StaticBody2D"]
+collision_layer = 64
+collision_mask = 0
+script = ExtResource( 3 )
 
 [node name="Shadow" type="Sprite" parent="."]
 scale = Vector2( 1.12706, 1.26516 )
@@ -21,3 +47,20 @@ texture = ExtResource( 1 )
 position = Vector2( 0, -1.25141 )
 rotation = 1.5708
 shape = SubResource( 1 )
+
+[node name="PlayerDetectionZone" parent="." instance=ExtResource( 4 )]
+is_powerup = true
+
+[node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
+position = Vector2( 0.157486, -10.5518 )
+shape = SubResource( 4 )
+
+[node name="Light2D" type="Light2D" parent="."]
+scale = Vector2( 3, 3 )
+texture = ExtResource( 5 )
+color = Color( 0.156863, 0.666667, 0.0156863, 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Pulse = SubResource( 3 )
+
+[editable path="PlayerDetectionZone"]

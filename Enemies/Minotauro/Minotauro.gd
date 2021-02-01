@@ -26,6 +26,9 @@ onready var playerDetectionZone = $PlayerDetectionZone
 onready var hurtbox = $Hurtbox
 onready var softCollision = $SoftCollision
 onready var wanderController = $WanderController
+onready var hitbox = $Hitbox
+
+var playerStats = PlayerStats
 
 var state = IDLE
 
@@ -73,6 +76,10 @@ func _physics_process(delta):
 		CHASE:
 			var player = playerDetectionZone.player
 			if player != null:
+				if playerStats.has_sword:
+					hitbox.damage = 2
+				else:
+					hitbox.damage = 5
 				var direction = global_position.direction_to(player.global_position)
 				velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 				var input_vector = velocity

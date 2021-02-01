@@ -16,6 +16,8 @@ enum {
 var mazes = {}
 var active_maze = MAZE_1
 
+var playerStats = PlayerStats
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	mazes = {
@@ -28,7 +30,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if Input.is_action_just_released("ui_accept"):
+	if Input.is_action_just_released("ui_accept") and playerStats.has_sword:
 		active_maze = (active_maze + 1) % MAZE_MAX
 		set_active_maze(active_maze)
 

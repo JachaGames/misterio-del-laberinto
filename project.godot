@@ -21,12 +21,14 @@ _global_script_class_icons={
 [application]
 
 config/name="rpg"
-run/main_scene="res://world.tscn"
+run/main_scene="res://UI/SplashScreen.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 PlayerStats="*res://Player/PlayerStats.tscn"
+PlayerData="*res://UI/menu/Autoload/PlayerData.tscn"
+SceneChanger="*res://SceneChanger.tscn"
 
 [display]
 
